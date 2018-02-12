@@ -45,39 +45,23 @@ class Encoding {
   const ICONV_IGNORE = "IGNORE";
   const WITHOUT_ICONV = "";
 
-  protected static $win1252ToUtf8 = array(
-        128 => "\xe2\x82\xac",
-
-        130 => "\xe2\x80\x9a",
-        131 => "\xc6\x92",
-        132 => "\xe2\x80\x9e",
-        133 => "\xe2\x80\xa6",
-        134 => "\xe2\x80\xa0",
-        135 => "\xe2\x80\xa1",
-        136 => "\xcb\x86",
-        137 => "\xe2\x80\xb0",
-        138 => "\xc5\xa0",
-        139 => "\xe2\x80\xb9",
-        140 => "\xc5\x92",
-
-        142 => "\xc5\xbd",
-
-
-        145 => "\xe2\x80\x98",
-        146 => "\xe2\x80\x99",
-        147 => "\xe2\x80\x9c",
-        148 => "\xe2\x80\x9d",
-        149 => "\xe2\x80\xa2",
-        150 => "\xe2\x80\x93",
-        151 => "\xe2\x80\x94",
-        152 => "\xcb\x9c",
-        153 => "\xe2\x84\xa2",
-        154 => "\xc5\xa1",
-        155 => "\xe2\x80\xba",
-        156 => "\xc5\x93",
-
-        158 => "\xc5\xbe",
-        159 => "\xc5\xb8"
+  protected static $iso8859ToUtf8 = array(
+      161 => "\xc4\x84", // Ą
+      163 => "\xc5\x81", // Ł
+      166 => "\xc5\x9a", // Ś
+      172 => "\xc5\xb9", // Ź
+      175 => "\xc5\xbb", // Ż
+      177 => "\xc4\x99", // ą
+      179 => "\xc5\x82", // ł
+      182 => "\xc5\x9b", // ś
+      188 => "\xc5\xba", // ź
+      191 => "\xc5\xbc", // ż
+      198 => "\xc4\x86", // Ć
+      202 => "\xc4\x98", // Ę
+      211 => "\xc3\x93", // Ó
+      243 => "\xc3\xb3", // ó
+      230 => "\xc4\x87", // ć
+      234 => "\xc4\x99", // ę
   );
 
     protected static $brokenUtf8ToUtf8 = array(
@@ -231,8 +215,8 @@ class Encoding {
                     $buf .= $cc1 . $cc2;
             }
         } elseif(($c1 & "\xc0") == "\x80"){ // needs conversion
-              if(isset(self::$win1252ToUtf8[ord($c1)])) { //found in Windows-1252 special cases
-                  $buf .= self::$win1252ToUtf8[ord($c1)];
+              if(isset(self::$iso8859ToUtf8[ord($c1)])) { //found in Windows-1252 special cases
+                  $buf .= self::$iso8859ToUtf8[ord($c1)];
               } else {
                 $cc1 = (chr(ord($c1) / 64) | "\xc0");
                 $cc2 = (($c1 & "\x3f") | "\x80");
